@@ -31,3 +31,12 @@ const language = React.useContext(LanguageContext);
 import { useContext } from 'react';
 const language = useContext(languageContext);
 ```
+
+### Plan for testing getSecretWord in App component
+
+- Create `actions/hookActions.js` (wouldn't this be a custom hook?)
+- Create a function that takes `setSecretWord`
+  - and gets secret word from the server
+  - then run `setSecretWord` with result
+- Default export object with all the actions from `hookActions.js` for mocking
+- We will use axios and moxios
