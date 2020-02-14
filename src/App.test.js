@@ -34,4 +34,10 @@ describe('getSecretWord', () => {
     setup();
     expect(mockGetSecretWord).toHaveBeenCalled();
   });
+  it(`doesn't update state on App update`, () => {
+    const wrapper = setup(); // App is mounted here. mock is called once.
+    mockGetSecretWord.mockClear(); // clear
+    wrapper.setProps(); // force re-render
+    expect(mockGetSecretWord).not.toHaveBeenCalled();
+  });
 });
