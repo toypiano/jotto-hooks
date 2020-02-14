@@ -10,7 +10,7 @@ const Input = ({ secretWord }) => {
     // TODO: Compare guessedWords against secretWord and optionally update success context
   };
   return (
-    <div data-test="component-input">
+    <div data-test="component-input" className="mt-5">
       <form
         data-test="form"
         className="form-inline"
@@ -18,13 +18,16 @@ const Input = ({ secretWord }) => {
       >
         <input
           data-test="input-control"
-          className="form-control"
+          className="form-control mr-sm-2 mb-3"
           type="text"
           placeholder="enter guess"
           value={currentGuess}
           onChange={e => setCurrentGuess(e.target.value)}
         />
-        <button data-test="submit-button" className="btn btn-primary">
+        <button
+          data-test="submit-button"
+          className="btn btn-primary mb-3"
+        >
           Submit
         </button>
       </form>

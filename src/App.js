@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import Input from './Input';
 
 import hookActions from './actions/hookActions';
 
@@ -30,7 +31,11 @@ function App() {
     },
     [] // this will only run once on mount and not on re-render
   );
-  return <div data-test="component-app"></div>;
+  return (
+    <div data-test="component-app" className="container text-center">
+      <Input secretWord={state.secretWord} />
+    </div>
+  );
 }
 
 export default App;
