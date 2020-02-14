@@ -19,7 +19,7 @@ describe('moxios tests', () => {
       const request = moxios.requests.mostRecent();
       request.respondWith({
         status: 200,
-        response: secretWord
+        response: { word: secretWord } // wordnik api
       });
     });
 
