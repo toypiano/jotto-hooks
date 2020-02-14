@@ -60,3 +60,9 @@ const language = useContext(languageContext);
   - then run `setSecretWord` with result
 - Default export object with all the actions from `hookActions.js` for mocking
 - We will use axios and moxios
+
+> Note: We're not testing `useEffect`, but only testing whether the function inside useEffect is doing its job.
+
+- To test that `getSecretWord` doesn't run on update, we'll trigger an update with Enzyme `setProps()`
+  - `update()` doesn't trigger `useEffect()`
+  - `update()` syncs the enzyme component tree snapshot with the react component tree. But it does not force re-render on react's side.
