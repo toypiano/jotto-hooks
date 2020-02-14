@@ -17,18 +17,38 @@ TDD with Jest and Enzyme using React Hooks and Context API
 
 Jest resets properties on modules to replace functions with mocks
 
+```jsx
+let mockSetCurrentGuess = jest.fn(),
+  wrapper;
+beforeEach(() => {
+  // clear the results from the last test.
+  mockSetCurrentGuess.mockClear();
+  // replace useState with mock function
+  React.useState = jest.fn(() => ['', mockSetCurrentGuess]);
+  wrapper = setup();
+});
+```
+
 - Mocking `useContext` will work
 
 ```jsx
 import React from 'react';
 
+// Swap!
+
+// Now React.useContext is pointing at the mock function
 const language = React.useContext(LanguageContext);
 ```
 
 - Mocking `useContext` will **not** work
 
 ```jsx
-import { useContext } from 'react';
+import React, { useContext } from 'react';
+
+// Swap!
+
+// Our mock function is at React.useContext
+// But useContext is pointing at the real one from 'react'
 const language = useContext(languageContext);
 ```
 
