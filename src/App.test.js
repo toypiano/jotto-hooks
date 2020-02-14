@@ -14,9 +14,16 @@ const mockGetSecretWord = jest.fn();
  * Setup function for App component
  * @returns {Object} - ReactWrapper
  */
-const setup = () => {
+const setup = (secretWord = 'piano') => {
   mockGetSecretWord.mockClear();
   hookActions.getSecretWord = mockGetSecretWord;
+
+  const mockUseReducer = jest.fn().mockReturnValue([
+    { secretWord },
+    jest.fn() // would () => {} work too?
+  ]);
+
+  React.useReducer = mockUseReducer;
 
   // use mount, because useEffect not called on 'shallow'
   // https://github.com/airbnb/enzyme/issues/2086
@@ -39,5 +46,35 @@ describe('getSecretWord', () => {
     mockGetSecretWord.mockClear(); // clear
     wrapper.setProps(); // force re-render
     expect(mockGetSecretWord).not.toHaveBeenCalled();
+  });
+});
+
+describe('secretWord is not null', () => {
+  let wrapper;
+  beforeEach(() => {
+    wrapper = setup('piano');
+  });
+  it('renders app when secretWord is not null', () => {
+    const app = findByTestAttr(wrapper, 'component-app');
+    expect(app.exists()).toBe(true);
+  });
+  it('does not render spinner when secretWord is not null', () => {
+    const spinner = findByTestAttr(wrapper, 'spinner');
+    expect(spinner.exists()).toBe(false);
+  });
+});
+
+describe('secretWord is null', () => {
+  let wrapper;
+  beforeEach(() => {
+    wrapper = setup(null);
+  });
+  it('does not renders app when secretWord is null', () => {
+    const app = findByTestAttr(wrapper, 'component-app');
+    expect(app.exists()).toBe(false);
+  });
+  it('renders spinner when secretWord is not null', () => {
+    const spinner = findByTestAttr(wrapper, 'spinner');
+    expect(spinner.exists()).toBe(true);
   });
 });

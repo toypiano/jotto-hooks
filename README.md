@@ -66,3 +66,10 @@ const language = useContext(languageContext);
 - To test that `getSecretWord` doesn't run on update, we'll trigger an update with Enzyme `setProps()`
   - `update()` doesn't trigger `useEffect()`
   - `update()` syncs the enzyme component tree snapshot with the react component tree. But it does not force re-render on react's side.
+
+### Plan for testing spinner
+
+- Update `setup` to take `secretWord`
+- mock `useReducer` to:
+  - set value of secret word (to use in the test)
+  - pass jest mock as dispatch (check if blank function works too)
