@@ -52,7 +52,7 @@ import React, { useContext } from 'react';
 const language = useContext(languageContext);
 ```
 
-### Plan for testing getSecretWord in App component
+### Testing getSecretWord in App component
 
 - Create `actions/hookActions.js` (wouldn't this be a custom hook?)
 - Create a function that takes `setSecretWord`
@@ -67,9 +67,26 @@ const language = useContext(languageContext);
   - `update()` doesn't trigger `useEffect()`
   - `update()` syncs the enzyme component tree snapshot with the react component tree. But it does not force re-render on react's side.
 
-### Plan for testing spinner
+### Testing spinner
 
 - Update `setup` to take `secretWord`
 - mock `useReducer` to:
   - set value of secret word (to use in the test)
   - pass jest mock as dispatch (check if blank function works too)
+
+### Language context
+
+- `[language, setLanguage] = useState("english")` in App component
+- pass in `setLanguage` as a prop to `LanguagePicker` component
+- Export `languageContext` from `./src/contexts/languageContext.js`
+- Wrap App's children in `languageContext.Provider`
+- Provider updates children when value changes.
+- Import `languageContext` in component files and use `useContext()` to consume context value.
+
+### Strings file
+
+- Object with strings in each language (strings "database")
+- Function(languageCode, key) => strings in that language
+- Unknown code / key:
+  - console.log warning
+  - use default language
