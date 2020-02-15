@@ -3,6 +3,8 @@ import './App.css';
 import Input from './Input';
 
 import hookActions from './actions/hookActions';
+import languageContext from './contexts/languageContext';
+import LanguagePicker from './LanguagePicker';
 
 // App.test will swap hookActions.getSecretWord with mock here
 
@@ -11,18 +13,23 @@ function reducer(state, action) {
   switch (action.type) {
     case 'setSecretWord':
       return { ...state, secretWord: action.payload };
+    case 'setLanguage':
+      return { ...state, language: action.payload };
     default:
       throw new Error(`Invalid action type: ${action.type}`);
   }
 }
 
 function App() {
-  const initialState = { secretWord: null };
+  const initialState = { secretWord: null, language: 'eng' };
   const [state, dispatch] = React.useReducer(reducer, initialState);
 
   // dispatch action with secretWord
   const setSecretWord = secretWord =>
     dispatch({ type: 'setSecretWord', payload: secretWord });
+
+  const setLanguage = language =>
+    dispatch({ type: 'setLanguage', payload: language });
 
   React.useEffect(
     // call API and run setSecretWord passing response.data
@@ -44,7 +51,11 @@ function App() {
   }
   return (
     <div data-test="component-app" className="container text-center">
-      <Input secretWord={state.secretWord} />
+      <h1>Jotto</h1>
+      <languageContext.Provider value={state.language}>
+        <LanguagePicker setLanguage={setLanguage} />
+        <Input secretWord={state.secretWord} />
+      </languageContext.Provider>
     </div>
   );
 }
