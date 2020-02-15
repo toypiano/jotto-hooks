@@ -25,7 +25,14 @@ function getStringByLanguage(
   languageCode, // 'eng'
   stringKey, // 'submit'
   strings = languageStrings // string object
-) {}
+) {
+  // defaults to eng[stringKey]
+  // if no key in eng, returns undefined;
+  if (!strings[languageCode] || !strings[languageCode][stringKey]) {
+    return strings.eng[stringKey];
+  }
+  return strings[languageCode][stringKey];
+}
 
 // for future mocking
 // e.g. strings.someFunc = jest.fn()
