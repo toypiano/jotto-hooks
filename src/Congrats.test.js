@@ -1,21 +1,34 @@
-import React from "react";
-import { shallow } from "enzyme";
-import { findByTestAttr, checkProps } from "../test/testUtils";
-import Congrats from "./Congrats";
+import React from 'react';
+import { shallow, mount } from 'enzyme';
+import { findByTestAttr, checkProps } from '../test/testUtils';
+import Congrats from './Congrats';
+import languageContext from './contexts/languageContext';
 
 const defaultProps = { success: false };
-const setup = (props = {}) => {
-  const setupProps = { ...defaultProps, ...props };
-  return shallow(<Congrats {...setupProps} />);
+
+// we'll get success from context
+const setup = ({ success, language }) => {
+  language = language || 'eng'; // if not specified, default to 'eng'
+  success = success || false; // if falsy or false, set to false
+  return mount(
+    <languageContext.Provider value={language}>
+      <Congrats success={success} />
+    </languageContext.Provider>
+  );
 };
 
-describe("render", () => {
+describe('languagePicker', () => {
+  it('correctly renders congrats string in english', () => {});
+  it('correctly renders congrats string in korean', () => {});
+});
+
+describe('render', () => {
   let wrapper, component;
   beforeEach(() => {
     wrapper = setup();
-    component = findByTestAttr(wrapper, "component-congrats");
+    component = findByTestAttr(wrapper, 'component-congrats');
   });
-  test("renders without error", () => {
+  test('renders without error', () => {
     expect(component.length).toBe(1);
   });
   test("renders no text when 'success' prop is false", () => {
@@ -23,12 +36,12 @@ describe("render", () => {
   });
   test("renders non-empty congrats message when 'success' prop is true", () => {
     const wrapper = setup({ success: true });
-    const message = findByTestAttr(wrapper, "congrats-message");
+    const message = findByTestAttr(wrapper, 'congrats-message');
     expect(message.text().length).toBeGreaterThan(0);
   });
 });
 
-test("does no throw warning with expected props", () => {
+test('does no throw warning with expected props', () => {
   const expectedProps = defaultProps;
   checkProps(Congrats, expectedProps);
 });

@@ -90,3 +90,33 @@ const language = useContext(languageContext);
 - Unknown code / key:
   - console.log warning
   - use default language
+
+### Writing Context Tests: 2 options
+
+- Mock `useContext`
+  - mock return value sets `language` value
+  - **Pros**
+    - isolated unit test
+    - doesn't rely on other functionality
+    - use shallow (isolate from child component)
+  - **Cons**
+    - test becomes brittle when mocking multiple useContext
+    - have to match order of useContext's where they are used.
+    - not relevant for custom hook/ internal state pattern
+- Wrap component in `Provider` in setup
+
+  - hard-code `language` value with `value` prop
+  - **Props**
+    - closer to actual app
+    - `Provider` is unlikely to fail
+  - **Cons**
+    - need to use mount
+    - shallow only returns `Provider`
+    - component's children can affect the test result
+    - cannot test the actual "default" `language` value because we're hard-coding it with a value for the test.
+
+- When/ Which to use?
+  - Providers in setup and mount:
+    - Simple app where components are not deeply nested
+  - Mock useContext + shallow:
+    - For more complicated app
