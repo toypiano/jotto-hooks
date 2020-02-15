@@ -29,6 +29,9 @@ function getStringByLanguage(
   // defaults to eng[stringKey]
   // if no key in eng, returns undefined;
   if (!strings[languageCode] || !strings[languageCode][stringKey]) {
+    console.warn(
+      `Could not get string [${stringKey}] for [${languageCode}]`
+    );
     return strings.eng[stringKey];
   }
   return strings[languageCode][stringKey];
