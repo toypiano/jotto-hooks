@@ -24,7 +24,7 @@ beforeEach(() => {
   // clear the results from the last test.
   mockSetCurrentGuess.mockClear();
   // replace useState with mock function
-  React.useState = jest.fn(() => ['', mockSetCurrentGuess]);
+  React.useState = jest.fn(() => ["", mockSetCurrentGuess]);
   wrapper = setup();
 });
 ```
@@ -32,7 +32,7 @@ beforeEach(() => {
 - Mocking `useContext` will work
 
 ```jsx
-import React from 'react';
+import React from "react";
 
 // Swap!
 
@@ -43,7 +43,7 @@ const language = React.useContext(LanguageContext);
 - Mocking `useContext` will **not** work
 
 ```jsx
-import React, { useContext } from 'react';
+import React, { useContext } from "react";
 
 // Swap!
 
@@ -99,6 +99,7 @@ const language = useContext(languageContext);
     - isolated unit test
     - doesn't rely on other functionality
     - use shallow (isolate from child component)
+    - can test default context value by running `useContext` and return default value.
   - **Cons**
     - test becomes brittle when mocking multiple useContext
     - have to match order of useContext's where they are used.
@@ -106,13 +107,13 @@ const language = useContext(languageContext);
 - Wrap component in `Provider` in setup
 
   - hard-code `language` value with `value` prop
-  - **Props**
+  - **Pros**
     - closer to actual app
     - `Provider` is unlikely to fail
   - **Cons**
     - need to use mount
     - shallow only returns `Provider`
-    - component's children can affect the test result
+    - component's children can affect the test result and becomes harder to pinpoint the cause of the problem when it happens.
     - cannot test the actual "default" `language` value because we're hard-coding it with a value for the test.
 
 - When/ Which to use?
