@@ -62,3 +62,29 @@ describe("if there are some guessed words", () => {
     expect(guessedWordNode.length).toBe(guessedWords.length);
   });
 });
+
+describe("LanguagePicker", () => {
+  it("correctly renders guess instructions string in english by default", () => {
+    // so that it displays instruction (not table)
+    const wrapper = setup({
+      guessedWords: []
+    });
+    const instructions = findByTestAttr(
+      wrapper,
+      "guess-instructions"
+    );
+    expect(instructions.text()).toMatch(
+      /^(?=.*\bguess\b)(?=.*\bword\b).*$/i
+    );
+  });
+  test("correctly renders guess instructions string in korean", () => {
+    const mockUseContext = jest.fn().mockReturnValue("kor");
+    React.useContext = mockUseContext;
+    const wrapper = setup({ guessedWords: [] });
+    const instructions = findByTestAttr(
+      wrapper,
+      "guess-instructions"
+    );
+    expect(instructions.text()).toMatch(/단어/);
+  });
+});
