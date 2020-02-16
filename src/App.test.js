@@ -1,25 +1,25 @@
-import React from 'react';
+import React from "react";
 // Enzyme currently(Feb 2020) doesn't run useEffect on shallow
 // React recommends using React Testing Library
 // https://reactjs.org/docs/testing.html#tools
-import { mount } from 'enzyme';
-import { findByTestAttr } from '../test/testUtils';
-import App from './App';
+import { mount } from "enzyme";
+import { findByTestAttr } from "../test/testUtils";
+import App from "./App";
 
 // we'll mock this module
-import hookActions from './actions/hookActions';
+import hookActions from "./actions/hookActions";
 
 const mockGetSecretWord = jest.fn();
 /**
  * Setup function for App component
  * @returns {Object} - ReactWrapper
  */
-const setup = (secretWord = 'piano') => {
+const setup = (secretWord = "piano") => {
   mockGetSecretWord.mockClear();
   hookActions.getSecretWord = mockGetSecretWord;
 
   const mockUseReducer = jest.fn().mockReturnValue([
-    { secretWord },
+    { secretWord, language: "eng" },
     jest.fn() // would () => {} work too?
   ]);
 
@@ -30,14 +30,14 @@ const setup = (secretWord = 'piano') => {
   return mount(<App />);
 };
 
-test('App renders without error', () => {
+test("App renders without error", () => {
   const wrapper = setup();
-  const component = findByTestAttr(wrapper, 'component-app');
+  const component = findByTestAttr(wrapper, "component-app");
   expect(component.length).toBe(1);
 });
 
-describe('getSecretWord', () => {
-  it('gets called on App mount', () => {
+describe("getSecretWord", () => {
+  it("gets called on App mount", () => {
     setup();
     expect(mockGetSecretWord).toHaveBeenCalled();
   });
@@ -49,32 +49,32 @@ describe('getSecretWord', () => {
   });
 });
 
-describe('secretWord is not null', () => {
+describe("secretWord is not null", () => {
   let wrapper;
   beforeEach(() => {
-    wrapper = setup('piano');
+    wrapper = setup("piano");
   });
-  it('renders app when secretWord is not null', () => {
-    const app = findByTestAttr(wrapper, 'component-app');
+  it("renders app when secretWord is not null", () => {
+    const app = findByTestAttr(wrapper, "component-app");
     expect(app.exists()).toBe(true);
   });
-  it('does not render spinner when secretWord is not null', () => {
-    const spinner = findByTestAttr(wrapper, 'spinner');
+  it("does not render spinner when secretWord is not null", () => {
+    const spinner = findByTestAttr(wrapper, "spinner");
     expect(spinner.exists()).toBe(false);
   });
 });
 
-describe('secretWord is null', () => {
+describe("secretWord is null", () => {
   let wrapper;
   beforeEach(() => {
     wrapper = setup(null);
   });
-  it('does not renders app when secretWord is null', () => {
-    const app = findByTestAttr(wrapper, 'component-app');
+  it("does not renders app when secretWord is null", () => {
+    const app = findByTestAttr(wrapper, "component-app");
     expect(app.exists()).toBe(false);
   });
-  it('renders spinner when secretWord is not null', () => {
-    const spinner = findByTestAttr(wrapper, 'spinner');
+  it("renders spinner when secretWord is not null", () => {
+    const spinner = findByTestAttr(wrapper, "spinner");
     expect(spinner.exists()).toBe(true);
   });
 });

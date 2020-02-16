@@ -12,7 +12,7 @@ const languageStrings = {
     congrats: "짝짝짝! 정답입니다! ",
     submit: "제출",
     guessPrompt: "다섯글자 단어를 맞춰보세요!",
-    guessInputPlaceholder: "단어 입력",
+    guessInputPlaceholder: "단어를 입력하세요",
     guessColumnHeader: "입력한 단어들",
     guessedWords: "단어",
     matchingLettersColumnHeader: "일치하는 글자"
@@ -29,6 +29,11 @@ function getStringByLanguage(
   // defaults to eng[stringKey]
   // if no key in eng, returns undefined;
   if (!strings[languageCode] || !strings[languageCode][stringKey]) {
+    // because we use 'mount' in app.test and Provider takes
+    // state.language returned from useReducer in App component
+    // make sure the language is there when you initialize useReducer
+    // if you mock useReducer in tests.
+
     console.warn(
       `Could not get string [${stringKey}] for [${languageCode}]`
     );
