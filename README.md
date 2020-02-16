@@ -121,3 +121,7 @@ const language = useContext(languageContext);
     - Simple app where components are not deeply nested
   - Mock useContext + shallow:
     - For more complicated app
+
+### Acceptance testing
+
+- perform a manual acceptance testing where you test the app in the browser and ensure it renders correctly according to the language.

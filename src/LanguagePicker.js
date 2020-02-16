@@ -1,14 +1,15 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
 function LanguagePicker({ setLanguage }) {
   const languages = [
-    { code: 'eng', symbol: '\u{1F1EC}\u{1F1E7}' },
-    { code: 'kor', symbol: '\u{1F1F0}\u{1F1F7}' }
+    { code: "eng", symbol: "\u{1F1EC}\u{1F1E7}" },
+    { code: "kor", symbol: "\u{1F1F0}\u{1F1F7}" }
   ];
 
   const languageIcons = languages.map(lang => (
     <span
+      className="language-icon"
       data-test="language-icon"
       key={lang.code}
       onClick={() => setLanguage(lang.code)}
@@ -18,7 +19,12 @@ function LanguagePicker({ setLanguage }) {
   ));
 
   return (
-    <div data-test="component-language-picker">{languageIcons}</div>
+    <div
+      data-test="component-language-picker"
+      className="LanguagePicker"
+    >
+      {languageIcons}
+    </div>
   );
 }
 
